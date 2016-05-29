@@ -1,0 +1,146 @@
+'---------------------
+'PDF Property Changer
+'
+'Copyright (c) 2016 Hiro.M
+'Released under the MIT license
+'http://opensource.org/licenses/mit-license.php
+'---------------------
+Option Explicit
+
+' 表示フラグスイッチのセル
+Private Const SW_RANGE As String = "B4", SW_TITLE As String = "E8", SW_AUTHOR As String = "E9", SW_STITLE As String = "E10", _
+                SW_KWORD As String = "E11", SW_CDATE As String = "E14", SW_UPDATE As String = "E15"
+
+' 設定項目の開始・終了部
+Private Const S_ROW As Long = 2, E_ROW As Long = 14, S_COL As String = "C", E_COL As String = "L"
+
+' 設定項目部セル（SR(StartRange)：範囲起点セル,ER(EndRange)：範囲終了セル）
+Private Const SR_TITLE As String = "O", ER_TITLE As String = "T", SR_AUTHOR As String = "U", ER_AUTHOR As String = "X", SR_STITLE As String = "Y", ER_STITLE As String = "AD", _
+                SR_KWORD As String = "AE", ER_KWORD As String = "AH", SR_CDATE As String = "AI", ER_CDATE As String = "AJ", SR_UPDATE As String = "AK", ER_UPDATE As String = "AL"
+
+
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+    
+    ' 変更されたセルが単独でない場合は処理を抜ける
+    If Target.Count > 1 Then
+        Exit Sub
+    End If
+    
+    Select Case Target.Address
+    
+        ' 設定項目
+        Case Range(SW_RANGE).Address
+            Call VisibleSet_Settings(Target)
+            
+        ' タイトル
+        Case Range(SW_TITLE).Address
+            Call VisibleSet_Title(Target)
+        
+        ' 作成者
+        Case Range(SW_AUTHOR).Address
+            Call VisibleSet_Author(Target)
+    
+        ' サブタイトル
+        Case Range(SW_STITLE).Address
+            Call VisibleSet_Subtitle(Target)
+            
+        ' キーワード
+        Case Range(SW_KWORD).Address
+            Call VisibleSet_Keyword(Target)
+            
+        ' 作成日
+        Case Range(SW_CDATE).Address
+            Call VisibleSet_CreateDate(Target)
+            
+        ' 更新日
+        Case Range(SW_UPDATE).Address
+            Call VisibleSet_UpDate(Target)
+            
+    End Select
+    
+    
+    Exit Sub
+    
+End Sub
+
+' 設定項目
+Private Function VisibleSet_Settings(ByVal Target As Boolean)
+
+    If Target = True Then
+        ' Rows(S_ROW & ":" & E_ROW).Hidden = False
+        Columns(S_COL & ":" & E_COL).Hidden = False
+    ElseIf Target = False Then
+        ' Rows(S_ROW & ":" & E_ROW).Hidden = True
+        Columns(S_COL & ":" & E_COL).Hidden = True
+    End If
+    
+End Function
+
+' タイトル
+Private Function VisibleSet_Title(ByVal Target As Boolean)
+
+    If Target = True Then
+        Columns(SR_TITLE & ":" & ER_TITLE).Hidden = False
+    ElseIf Target = False Then
+        Columns(SR_TITLE & ":" & ER_TITLE).Hidden = True
+    End If
+    
+End Function
+
+' 作成者
+Private Function VisibleSet_Author(ByVal Target As Boolean)
+
+    If Target = True Then
+        Columns(SR_AUTHOR & ":" & ER_AUTHOR).Hidden = False
+    ElseIf Target = False Then
+        Columns(SR_AUTHOR & ":" & ER_AUTHOR).Hidden = True
+    End If
+
+End Function
+
+' サブタイトル
+Private Function VisibleSet_Subtitle(ByVal Target As Boolean)
+
+    If Target = True Then
+        Columns(SR_STITLE & ":" & ER_STITLE).Hidden = False
+    ElseIf Target = False Then
+        Columns(SR_STITLE & ":" & ER_STITLE).Hidden = True
+    End If
+
+End Function
+
+' キーワード
+Private Function VisibleSet_Keyword(ByVal Target As Boolean)
+
+    If Target = True Then
+        Columns(SR_KWORD & ":" & ER_KWORD).Hidden = False
+    ElseIf Target = False Then
+        Columns(SR_KWORD & ":" & ER_KWORD).Hidden = True
+    End If
+
+End Function
+
+' 作成日
+Private Function VisibleSet_CreateDate(ByVal Target As Boolean)
+
+    If Target = True Then
+        Columns(SR_CDATE & ":" & ER_CDATE).Hidden = False
+    ElseIf Target = False Then
+        Columns(SR_CDATE & ":" & ER_CDATE).Hidden = True
+    End If
+
+End Function
+
+' 更新日
+Private Function VisibleSet_UpDate(ByVal Target As Boolean)
+
+    If Target = True Then
+        Columns(SR_UPDATE & ":" & ER_UPDATE).Hidden = False
+    ElseIf Target = False Then
+        Columns(SR_UPDATE & ":" & ER_UPDATE).Hidden = True
+    End If
+
+End Function
+
+
